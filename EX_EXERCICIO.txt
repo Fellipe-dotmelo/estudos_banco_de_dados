@@ -1,0 +1,299 @@
+mysql> CREATE DATABASE EXERCICIO;
+Query OK, 1 row affected (0.06 sec)
+
+mysql> USE EXERCICIOS;
+ERROR 1049 (42000): Unknown database 'exercicios'
+mysql> USE EXERCICIO;
+Database changed
+mysql> create table funcionarios
+    ->   (
+    ->       idFuncionario integer,
+    ->       nome varchar(100),
+    ->       email varchar(200),
+    ->       sexo varchar(10),
+    ->       departamento varchar(100),
+    ->       admissao varchar(10),
+    ->       salario integer,
+    ->       cargo varchar(100),
+    ->       idRegiao int
+    ->   );
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> SHOW TABLES;
++---------------------+
+| Tables_in_exercicio |
++---------------------+
+| funcionarios        |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> DESC FUNCIONARIOS;
++---------------+--------------+------+-----+---------+-------+
+| Field         | Type         | Null | Key | Default | Extra |
++---------------+--------------+------+-----+---------+-------+
+| idFuncionario | int(11)      | YES  |     | NULL    |       |
+| nome          | varchar(100) | YES  |     | NULL    |       |
+| email         | varchar(200) | YES  |     | NULL    |       |
+| sexo          | varchar(10)  | YES  |     | NULL    |       |
+| departamento  | varchar(100) | YES  |     | NULL    |       |
+| admissao      | varchar(10)  | YES  |     | NULL    |       |
+| salario       | int(11)      | YES  |     | NULL    |       |
+| cargo         | varchar(100) | YES  |     | NULL    |       |
+| idRegiao      | int(11)      | YES  |     | NULL    |       |
++---------------+--------------+------+-----+---------+-------+
+9 rows in set (0.02 sec)
+
+----------------
+/* Exercício: */
+
+SELECT COUNT(*) FROM FUNCIONARIOS;
++----------+
+| COUNT(*) |
++----------+
+|      974 |
++----------+
+1 row in set (0.02 sec)
+
+--Traga os funcionarios que trabalhem
+--no departamento de filmes OU no
+--departamento de roupas
+
+/*
+Correção: 
+
+21 | Filmes 
+53 | Roupas
+
+-- Como estams usando OR e a segunda condição é "opcional", colocamos na primeira a condição que 
+-- tem mais chances de uma saída verdadeira, pois a segunda condição não será checada nesse caso.
+
+SELECT COUNT(*), DEPARTAMENTO
+FROM FUNCIONARIOS
+GROUP BY DEPARTAMENTO;
+
+SELECT NOME, DEPARTAMENTO FROM FUNCIONARIOS
+WHERE DEPARTAMENTO = "Roupas" OR DEPARTAMENTO = "Filmes";
+
+*/
+
+FORMA QUE HAVIA EXECUTADO SEM LEVAR EM CONSIDERÇÃO A OTIMIZAÇÃO DA *CONSULTA*
+mysql> SELECT NOME, DEPARTAMENTO FROM FUNCIONARIOS WHERE DEPARTAMENTO = "Filmes" OR DEPARTAMENTO = "Roupas";
++------------+--------------+
+| NOME       | DEPARTAMENTO |
++------------+--------------+
+| Black      | Roupas       |
+| Price      | Roupas       |
+| Hawkins    | Roupas       |
+| Oliver     | Roupas       |
+| Cunningham | Roupas       |
+| Perkins    | Roupas       |
+| Freeman    | Roupas       |
+| Nguyen     | Roupas       |
+| Washington | Roupas       |
+| Fisher     | Roupas       |
+| Ferguson   | Roupas       |
+| Watson     | Roupas       |
+| Day        | Roupas       |
+| Gonzales   | Filmes       |
+| Rose       | Roupas       |
+| Snyder     | Filmes       |
+| Gordon     | Filmes       |
+| Richardson | Roupas       |
+| Cooper     | Filmes       |
+| Berry      | Roupas       |
+| Arnold     | Roupas       |
+| Jordan     | Roupas       |
+| Wright     | Roupas       |
+| Spencer    | Filmes       |
+| Gonzales   | Roupas       |
+| Young      | Roupas       |
+| White      | Roupas       |
+| Marshall   | Roupas       |
+| Ortiz      | Roupas       |
+| Roberts    | Filmes       |
+| Boyd       | Roupas       |
+| Gray       | Roupas       |
+| Little     | Filmes       |
+| Griffin    | Filmes       |
+| Gomez      | Roupas       |
+| Williamson | Roupas       |
+| Richards   | Roupas       |
+| Kelley     | Filmes       |
+| Kim        | Roupas       |
+| James      | Roupas       |
+| Taylor     | Roupas       |
+| Lynch      | Roupas       |
+| Arnold     | Filmes       |
+| Greene     | Roupas       |
+| Alexander  | Roupas       |
+| Phillips   | Roupas       |
+| Warren     | Filmes       |
+| Reid       | Roupas       |
+| Price      | Roupas       |
+| Clark      | Filmes       |
+| Roberts    | Roupas       |
+| Hill       | Roupas       |
+| Johnson    | Filmes       |
+| Murray     | Roupas       |
+| Richards   | Roupas       |
+| Elliott    | Roupas       |
+| Elliott    | Filmes       |
+| Olson      | Roupas       |
+| Weaver     | Filmes       |
+| James      | Roupas       |
+| Sims       | Roupas       |
+| Gomez      | Filmes       |
+| Knight     | Filmes       |
+| Rice       | Filmes       |
+| Knight     | Roupas       |
+| Roberts    | Roupas       |
+| Price      | Filmes       |
+| Kelley     | Roupas       |
+| Bishop     | Filmes       |
+| Rice       | Roupas       |
+| Marshall   | Roupas       |
+| Burton     | Roupas       |
+| Richards   | Roupas       |
+| Walker     | Filmes       |
++------------+--------------+
+74 rows in set (0.00 sec)
+
+mysql>
+
+--O gestor de marketing pediu a lista das funcionárias que trabalhem no departamento
+--de filmes OU no departamento lar. Ele necessita enviar um email para as colaboradoras
+--desses dois setores.
+
+/*CORREÇÃO:
+
+FEMININO = 491
+SELECT COUNT(*) SEXO
+FROM FUNCIONARIOS
+GROUP BY SEXO;
+
+52 | LAR 
+21 | FILMES
+SELECT COUNT(*) DEPARTAMENTO
+FROM FUNCIONARIOS
+GROUP BY SEXO;
+
+SELECT NOME, DEPARTAMENTO, SEXO FROM FUNCIONARIOS
+WHERE
+(DEPARTAMENTO = "Lar" AND SEXO = "Feminino");
+OR
+(DEPARTAMENTO = "Filmes" AND SEXO = "Feminino");
+
+*/
+
++------------+--------------+----------+
+| NOME       | DEPARTAMENTO | SEXO     |
++------------+--------------+----------+
+| Porter     | Lar          | Feminino |
+| Owens      | Lar          | Feminino |
+| Cruz       | Lar          | Feminino |
+| Washington | Lar          | Feminino |
+| Gilbert    | Lar          | Feminino |
+| Montgomery | Lar          | Feminino |
+| Diaz       | Lar          | Feminino |
+| Freeman    | Lar          | Feminino |
+| Gibson     | Lar          | Feminino |
+| Crawford   | Lar          | Feminino |
+| Campbell   | Lar          | Feminino |
+| Gonzales   | Lar          | Feminino |
+| Payne      | Lar          | Feminino |
+| Cooper     | Lar          | Feminino |
+| Chapman    | Lar          | Feminino |
+| Williams   | Lar          | Feminino |
+| Morales    | Lar          | Feminino |
+| Berry      | Lar          | Feminino |
+| Cox        | Lar          | Feminino |
+| Morris     | Lar          | Feminino |
+| Walker     | Lar          | Feminino |
+| Myers      | Lar          | Feminino |
+| Olson      | Lar          | Feminino |
+| Evans      | Lar          | Feminino |
+| Mendoza    | Lar          | Feminino |
+| Ferguson   | Lar          | Feminino |
+| Gonzales   | Lar          | Feminino |
+| Burke      | Lar          | Feminino |
+| Murray     | Lar          | Feminino |
+| Carpenter  | Lar          | Feminino |
+| Jones      | Lar          | Feminino |
+| Sanchez    | Lar          | Feminino |
++------------+------------
+
+--Como estamos trabalhando com AND, colocamos
+--o departamento primeiro, pois irá checar a 
+--segunda condição um número menor de vezes.
+
+SELECT NOME, DEPARTAMENTO, SEXO
+FROM FUNCIONARIOS
+WHERE DEPARTAMENTO = 'Filmes' OR DEPARTAMENTO 'Lar' 
+AND SEXO = 'Feminino';
+
++------------+--------------+----------+
+| NOME       | DEPARTAMENTO | SEXO     |
++------------+--------------+----------+
+| Porter     | Lar          | Feminino |
+| Owens      | Lar          | Feminino |
+| Cruz       | Lar          | Feminino |
+| Washington | Lar          | Feminino |
+| Gilbert    | Lar          | Feminino |
+| Montgomery | Lar          | Feminino |
+| Diaz       | Lar          | Feminino |
+| Freeman    | Lar          | Feminino |
+| Gordon     | Filmes       | Feminino |
+| Cooper     | Filmes       | Feminino |
+| Gibson     | Lar          | Feminino |
+| Crawford   | Lar          | Feminino |
+| Campbell   | Lar          | Feminino |
+| Gonzales   | Lar          | Feminino |
+| Payne      | Lar          | Feminino |
+| Cooper     | Lar          | Feminino |
+| Chapman    | Lar          | Feminino |
+| Williams   | Lar          | Feminino |
+| Morales    | Lar          | Feminino |
+| Berry      | Lar          | Feminino |
+| Little     | Filmes       | Feminino |
+| Cox        | Lar          | Feminino |
+| Morris     | Lar          | Feminino |
+| Walker     | Lar          | Feminino |
+| Myers      | Lar          | Feminino |
+| Olson      | Lar          | Feminino |
+| Evans      | Lar          | Feminino |
+| Warren     | Filmes       | Feminino |
+| Mendoza    | Lar          | Feminino |
+| Ferguson   | Lar          | Feminino |
+| Gonzales   | Lar          | Feminino |
+| Burke      | Lar          | Feminino |
+| Murray     | Lar          | Feminino |
+| Gomez      | Filmes       | Feminino |
+| Knight     | Filmes       | Feminino |
+| Rice       | Filmes       | Feminino |
+| Carpenter  | Lar          | Feminino |
+| Bishop     | Filmes       | Feminino |
+| Jones      | Lar          | Feminino |
+| Walker     | Filmes       | Feminino |
+| Sanchez    | Lar          | Feminino |
++------------+--------------+----------+
+41 rows in set (0.00 sec)
+
+--Traga os funcionários do sexo masculino
+--ou os que trabalham no Jardim.
+
+SELECT COUNT(*), SEXO
+FROM FUNCIONARIOS
+GROUP BY SEXO;
+
+483 | Masculino
+
+SELECT COUNT(*), DEPARTAMENTO
+FROM FUNCIONARIOS
+GROUP BY DEPARTAMENTO;
+
+47 | Jardim
+
+SELECT DEPARTAMENTO, SEXO
+FROM FUNCIONARIOS
+WHERE
+SEXO = "Masculino" OR DEPARTAMENTO = "Jardim";

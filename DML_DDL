@@ -1,0 +1,230 @@
+
+/*
+
+DML - DATA MANIPULATION LANGUAGE
+DDL - DATA DEFINITION LANGUAGE
+DCL - DATA CONTROL LANGUAGE
+TCL - TRANSACION CONTROL LANGUAGE
+
+*/
+
+/*INSERT*/
+
+INSERT INTO CLIENTE VALUES(NULL, 'PAULA', 'F', NULL, '77437493');
+INSERT INTO ENDERECO VALUES(NULL, 'RUA JOAQUIM SILVA', 'ALVORADA', 'NITEROI', 'RJ', 7);
+
+/*FILTRANDO*/
+
+mysql> SELECT * FROM CLIENTE WHERE SEXO = 'M';
++-----------+--------+------+---------------+----------------+
+| IDCLIENTE | NOME   | SEXO | EMAIL         | CPF            |
++-----------+--------+------+---------------+----------------+
+|         1 | JOÃO   | M    | JOAO@IG.COM   | 086.663.667-22 |
+|         2 | CARLOS | M    | CARLOS@IG.COM | 553.173.132-11 |
+|         5 | JORGE  | M    | JORGE@IG.COM  | 568.693.223-38 |
++-----------+--------+------+---------------+----------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM CLIENTE WHERE SEXO = 'F';
++-----------+-------+------+--------------+----------------+
+| IDCLIENTE | NOME  | SEXO | EMAIL        | CPF            |
++-----------+-------+------+--------------+----------------+
+|         3 | ANA   | F    | ANA@IG.COM   | 768.355.124-14 |
+|         4 | CLARA | F    | NULL         | 112.336.465-22 |
+|         6 | CELIA | F    | CELIA@IG.COM | 986.659.789-99 |
+|         7 | PAULA | F    | NULL         | 77437493       |
++-----------+-------+------+--------------+----------------+
+4 rows in set (0.00 sec)
+
+
+SELECT * FROM CLIENTE
+WHERE IDCLIENTE = 7;
+
+mysql> SELECT * FROM CLIENTE
+    -> WHERE IDCLIENTE = 7;
++-----------+-------+------+-------+----------+
+| IDCLIENTE | NOME  | SEXO | EMAIL | CPF      |
++-----------+-------+------+-------+----------+
+|         7 | PAULA | F    | NULL  | 77437493 |
++-----------+-------+------+-------+----------+
+1 row in set (0.02 sec)
+
+SELECT * FROM CLIENTE
+WHERE IDCLIENTE = 8;
+
+UPDATE CLIENTE
+SET CPF = '568.693.223-48'
+WHERE IDCLIENTE = 5;
+
+INSERT INTO CLIENTE VALUES(NULL, 'AVESTRUZ', 'M', NULL, '000.000.000-00');
+
+/*DELETE*/
+
+DELETE FROM CLIENTE
+WHERE IDCLIENTE = 8;
+
+/* DML = INSERIR(INSERT), ATUALIZAR(UPDATE) E DELETAR(DELETE);*/
+INSERT INTO CLIENTE VALUES(NULL, 'AVESTRUZ', 'M', NULL, '000.000.000-00');
+
+UPDATE CLIENTE
+SET EMAIL = 'CLARA.SOUZA@IG.COM.BR'
+WHERE IDCLIENTE = 4;
+
+DELETE FROM CLIENTE
+WHERE IDCLIENTE = 8;
+
+/* DDL - DATA DEFINITION LANGUAGE */
+
+CREATE TABLE PRODUTO(
+    IDPRODUTO INT PRIMARY KEY AUTO_INCREMENT, 
+    NOME_PRODUTO VARCHAR(30) NOT NULL,
+    PRECO INT, 
+    FRETE FLOAT(10, 2) NOT NULL 
+);
+
+mysql> CREATE TABLE PRODUTO(
+    ->     IDPRODUTO INT PRIMARY KEY AUTO_INCREMENT,
+    ->     NOME_PRODUTO VARCHAR(30) NOT NULL,
+    ->     PRECO INT,
+    ->     FRETE FLOAT(10, 2) NOT NULL
+    -> );
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> DESC PRODUTO;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| IDPRODUTO    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| NOME_PRODUTO | varchar(30) | NO   |     | NULL    |                |
+| PRECO        | int(11)     | YES  |     | NULL    |                |
+| FRETE        | float(10,2) | NO   |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+/* ALTER TABLE */
+
+ALTER TABLE PRODUTO
+CHANGE PRECO VALOR_UNITARIO INT NOT NULL;
+
+mysql> ALTER TABLE PRODUTO
+    -> CHANGE PRECO VALOR_UNITARIO INT NOT NULL;
+Query OK, 0 rows affected (0.17 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC PRODUTO;
++----------------+-------------+------+-----+---------+----------------+
+| Field          | Type        | Null | Key | Default | Extra          |
++----------------+-------------+------+-----+---------+----------------+
+| IDPRODUTO      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| NOME_PRODUTO   | varchar(30) | NO   |     | NULL    |                |
+| VALOR_UNITARIO | int(11)     | NO   |     | NULL    |                |
+| FRETE          | float(10,2) | NO   |     | NULL    |                |
++----------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+ALTER TABLE PRODUTO
+CHANGE VALOR_UNITARIO VALOR_UNITARIO INT;
+
+mysql> ALTER TABLE PRODUTO
+    -> CHANGE VALOR_UNITARIO VALOR_UNITARIO INT;
+Query OK, 0 rows affected (0.14 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC PRODUTO;
++----------------+-------------+------+-----+---------+----------------+
+| Field          | Type        | Null | Key | Default | Extra          |
++----------------+-------------+------+-----+---------+----------------+
+| IDPRODUTO      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| NOME_PRODUTO   | varchar(30) | NO   |     | NULL    |                |
+| VALOR_UNITARIO | int(11)     | YES  |     | NULL    |                |
+| FRETE          | float(10,2) | NO   |     | NULL    |                |
++----------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+/* MODIFY - MODIFICANDO O TIPO */
+
+ALTER TABLE PRODUTO
+MODIFY VALOR_UNITARIO VARCHAR(50) NOT NULL;
+
+mysql> ALTER TABLE PRODUTO
+    -> MODIFY VALOR_UNITARIO VARCHAR(50) NOT NULL;
+Query OK, 0 rows affected (0.22 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC PRODUTO;
++----------------+-------------+------+-----+---------+----------------+
+| Field          | Type        | Null | Key | Default | Extra          |
++----------------+-------------+------+-----+---------+----------------+
+| IDPRODUTO      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| NOME_PRODUTO   | varchar(30) | NO   |     | NULL    |                |
+| VALOR_UNITARIO | varchar(50) | NO   |     | NULL    |                |
+| FRETE          | float(10,2) | NO   |     | NULL    |                |
++----------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+/* ADICIONANDO COLUNAS */
+
+ALTER TABLE PRODUTO
+ADD PESO FLOAT(10, 2) NOT NULL;
+
+mysql> ALTER TABLE PRODUTO
+    -> ADD PESO FLOAT(10, 2) NOT NULL;
+Query OK, 0 rows affected (0.19 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC PRODUTO;
++----------------+-------------+------+-----+---------+----------------+
+| Field          | Type        | Null | Key | Default | Extra          |
++----------------+-------------+------+-----+---------+----------------+
+| IDPRODUTO      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| NOME_PRODUTO   | varchar(30) | NO   |     | NULL    |                |
+| VALOR_UNITARIO | varchar(50) | NO   |     | NULL    |                |
+| FRETE          | float(10,2) | NO   |     | NULL    |                |
+| PESO           | float(10,2) | NO   |     | NULL    |                |
++----------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)
+
+/*APAGANDO UMA COLUNA*/
+
+ALTER TABLE PRODUTO
+DROP COLUMN PESO;
+
+mysql> ALTER TABLE PRODUTO
+    -> DROP COLUMN PESO;
+Query OK, 0 rows affected (0.17 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC PRODUTO;
++----------------+-------------+------+-----+---------+----------------+
+| Field          | Type        | Null | Key | Default | Extra          |
++----------------+-------------+------+-----+---------+----------------+
+| IDPRODUTO      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| NOME_PRODUTO   | varchar(30) | NO   |     | NULL    |                |
+| VALOR_UNITARIO | varchar(50) | NO   |     | NULL    |                |
+| FRETE          | float(10,2) | NO   |     | NULL    |                |
++----------------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+/*ADICIONANDO COLUNA NA ORDEM ESPECÍFICA*/
+
+ALTER TABLE PRODUTO
+ADD COLUMN PESO FLOAT(10,2) NOT NULL
+AFTER NOME_PRODUTO;
+
+mysql> ALTER TABLE PRODUTO
+    -> ADD COLUMN PESO FLOAT(10,2) NOT NULL
+    -> AFTER NOME_PRODUTO;
+Query OK, 0 rows affected (0.17 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC PRODUTO;
++----------------+-------------+------+-----+---------+----------------+
+| Field          | Type        | Null | Key | Default | Extra          |
++----------------+-------------+------+-----+---------+----------------+
+| IDPRODUTO      | int(11)     | NO   | PRI | NULL    | auto_increment |
+| NOME_PRODUTO   | varchar(30) | NO   |     | NULL    |                |
+| PESO           | float(10,2) | NO   |     | NULL    |                |
+| VALOR_UNITARIO | varchar(50) | NO   |     | NULL    |                |
+| FRETE          | float(10,2) | NO   |     | NULL    |                |
++----------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.00 sec)

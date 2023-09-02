@@ -1,0 +1,323 @@
+CREATE TABLE LIVROS(
+	LIVRO VARCHAR(100),
+	AUTOR VARCHAR(100),
+	SEXO_AUTOR VARCHAR(1),
+	NUM_PAGINAS INT(5),
+	EDITORA VARCHAR(100),
+	VALOR FLOAT(10,2),
+	UF CHAR(2),
+	ANO INT(4)
+);
+
+1	Cavaleiro Real	Ana Claudia	Feminino	465	Atlas	49.9	RJ	2009
+2	SQL para leigos	João Nunes	Masculino	450	Addison	98	SP	2018
+3	Receitas Caseiras	Celia Tavares	Feminino	210	Atlas	45	RJ	2008
+4	Pessoas Efetivas	Eduardo Santos	Masculino	390	Beta	78.99	RJ	2018
+5	Habitos Saudáveis	Eduardo Santos	Masculino	630	Beta	150.98	RJ	2019
+6	A Casa Marrom	Hermes Macedo	Masculino	250	Bubba	60	MG	2016
+7	Estacio Querido	Geraldo Francisco	Masculino	310	Insignia	100	ES	2015
+8	Pra sempre amigas	Leda Silva	Feminino	510	Insignia	78.98	ES	2011
+9	Copas Inesqueciveis	Marco Alcantara	Masculino	200	Larson	130.98	RS	2018
+10	O poder da mente	Clara Mafra	Feminino	120	Continental	56.58	SP	2017
+
+INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('Cavaleiro Real'
+,'Ana Claudia','F','465','Atlas', 49.9, 'RJ', 2009);
+
+INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('SQL para leigos'
+,'João Nunes','M','450','Addison', 98, 'SP', 2018);
+
+INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('Receitas Caseiras'
+,'Celia Tavares','F','210','Atlas', 45, 'RJ', 2008);
+
+INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('Pessoas Efetivas'
+,'Eduardo Santos','M','390','Beta', 78.99, 'RJ', 2018);
+
+INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('Habitos Saudáveis'
+,'Eduardo Santos','M','630','Beta', 150.98, 'RJ', 2019);
+
+INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('A Casa Marrom'
+,'Hermes Macedo','M','250','Bubba', 60, 'MG', 2016);
+
+INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('Estacio Querido'
+,'Geraldo Francisco','M','310','Insignia', 100, 'ES', 2015);
+
+INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('Pra sempre amigas'
+,'Leda Silva','F','510','Insignia', 78.98, 'ES', 2011);
+
+INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('Copas Inesqueciveis'
+,'Marco Alcantara','M','200','Larson', 130.98, 'RS', 2018);
+
+INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('O poder da mente'
+,'Clara Mafra','F','120','Continental', 56.58, 'SP', 2017);
+
+/*Q1) Trazer todos os dados. */
+SELECT * FROM LIVROS; 
+
+/*Q2) Trazer o nome do livro e o nome da editora. */
+SELECT LIVRO, EDITORA
+FROM LIVROS;
+
+/*Q3) Trazer o nome do livro e a UF dos livros publicados por autores do sexo masculino. */
+SELECT LIVRO, UF, AUTOR FROM LIVROS
+WHERE SEXO_AUTOR LIKE '%M';
+
+/*Q4) Trazer o nome do livro e o número de páginas do livros publicados por autoras do sexo feminino. */
+SELECT LIVRO, NUM_PAGINAS, AUTOR FROM LIVROS
+WHERE SEXO_AUTOR LIKE '%F';
+
+/*Q5) Trazer os valores dos livros das editoras de SP */
+SELECT LIVRO, VALOR FROM LIVROS
+WHERE UF = 'SP';
+ 
+/*Q6) Trazer os dados dos autores do sexo masculino que tiveram livros publicados por São Paulo ou Rio de Janeiro (DESAFIO). */
+SELECT AUTOR, SEXO_AUTOR
+FROM LIVROS
+WHERE
+SEXO_AUTOR = 'M' AND (UF = 'SP' OR UF = 'RJ');
+
+mysql> CREATE DATABASE LIVRARIA;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> USE LIVRARIA
+Database changed
+mysql> CREATE TABLE LIVROS();
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> CREATE TABLE LIVROS(
+    -> LIVRO VARCHAR(100),
+    -> AUTOR VARCHAR(100),
+    -> SEXO_AUTOR VARCHAR(1),
+    -> NUM_PAGINAS INT(5),
+    -> EDITORA VARCHAR(100),
+    -> VALOR FLOAT(10,2),
+    -> UF CHAR(2),
+    -> ANO INT(4)
+    -> );
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> SHOW TABLES;
++--------------------+
+| Tables_in_livraria |
++--------------------+
+| livros             |
++--------------------+
+1 row in set (0.02 sec)
+
+mysql> INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('Cavaleiro Real'
+    -> ,'Ana Claudia','F','465','Atlas', 49.9, 'RJ', 2009);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> DESC LIVROS;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| LIVRO       | varchar(100) | YES  |     | NULL    |       |
+| AUTOR       | varchar(100) | YES  |     | NULL    |       |
+| SEXO_AUTOR  | varchar(1)   | YES  |     | NULL    |       |
+| NUM_PAGINAS | int(5)       | YES  |     | NULL    |       |
+| EDITORA     | varchar(100) | YES  |     | NULL    |       |
+| VALOR       | float(10,2)  | YES  |     | NULL    |       |
+| UF          | char(2)      | YES  |     | NULL    |       |
+| ANO         | int(4)       | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++--------------------+
+| Tables_in_livraria |
++--------------------+
+| livros             |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM LIVRARIA;
+ERROR 1146 (42S02): Table 'livraria.livraria' doesn't exist
+mysql> SELECT * FROM LIVROS;
++----------------+-------------+------------+-------------+---------+-------+------+------+
+| LIVRO          | AUTOR       | SEXO_AUTOR | NUM_PAGINAS | EDITORA | VALOR | UF   | ANO  |
++----------------+-------------+------------+-------------+---------+-------+------+------+
+| Cavaleiro Real | Ana Claudia | F          |         465 | Atlas   | 49.90 | RJ   | 2009 |
++----------------+-------------+------------+-------------+---------+-------+------+------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('SQL para leigos'
+    -> ,'João Nunes','M','450','Addison', 98, 'SP', 2018);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT * FROM LIVROS;
++-----------------+-------------+------------+-------------+---------+-------+------+------+
+| LIVRO           | AUTOR       | SEXO_AUTOR | NUM_PAGINAS | EDITORA | VALOR | UF   | ANO  |
++-----------------+-------------+------------+-------------+---------+-------+------+------+
+| Cavaleiro Real  | Ana Claudia | F          |         465 | Atlas   | 49.90 | RJ   | 2009 |
+| SQL para leigos | João Nunes  | M          |         450 | Addison | 98.00 | SP   | 2018 |
++-----------------+-------------+------------+-------------+---------+-------+------+------+
+2 rows in set (0.02 sec)
+
+mysql> INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('Receitas Caseiras'
+    -> ,'Celia Tavares','F','210','Atlas', 45, 'RJ', 2008);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SELECT * FROM LIVROS;
++-------------------+---------------+------------+-------------+---------+-------+------+------+
+| LIVRO             | AUTOR         | SEXO_AUTOR | NUM_PAGINAS | EDITORA | VALOR | UF   | ANO  |
++-------------------+---------------+------------+-------------+---------+-------+------+------+
+| Cavaleiro Real    | Ana Claudia   | F          |         465 | Atlas   | 49.90 | RJ   | 2009 |
+| SQL para leigos   | João Nunes    | M          |         450 | Addison | 98.00 | SP   | 2018 |
+| Receitas Caseiras | Celia Tavares | F          |         210 | Atlas   | 45.00 | RJ   | 2008 |
++-------------------+---------------+------------+-------------+---------+-------+------+------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('Pessoas Efetivas'
+    -> ,'Eduardo Santos','M','390','Beta', 78.99, 'RJ', 2018);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SELECT * FROM LIVROS;
++-------------------+----------------+------------+-------------+---------+-------+------+------+
+| LIVRO             | AUTOR          | SEXO_AUTOR | NUM_PAGINAS | EDITORA | VALOR | UF   | ANO  |
++-------------------+----------------+------------+-------------+---------+-------+------+------+
+| Cavaleiro Real    | Ana Claudia    | F          |         465 | Atlas   | 49.90 | RJ   | 2009 |
+| SQL para leigos   | João Nunes     | M          |         450 | Addison | 98.00 | SP   | 2018 |
+| Receitas Caseiras | Celia Tavares  | F          |         210 | Atlas   | 45.00 | RJ   | 2008 |
+| Pessoas Efetivas  | Eduardo Santos | M          |         390 | Beta    | 78.99 | RJ   | 2018 |
++-------------------+----------------+------------+-------------+---------+-------+------+------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('Habitos Saudáveis'
+    -> ,'Eduardo Santos','M','630','Beta', 150.98, 'RJ', 2019);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SELECT * FROM LIVROS;
++--------------------+----------------+------------+-------------+---------+--------+------+------+
+| LIVRO              | AUTOR          | SEXO_AUTOR | NUM_PAGINAS | EDITORA | VALOR  | UF   | ANO  |
++--------------------+----------------+------------+-------------+---------+--------+------+------+
+| Cavaleiro Real     | Ana Claudia    | F          |         465 | Atlas   |  49.90 | RJ   | 2009 |
+| SQL para leigos    | João Nunes     | M          |         450 | Addison |  98.00 | SP   | 2018 |
+| Receitas Caseiras  | Celia Tavares  | F          |         210 | Atlas   |  45.00 | RJ   | 2008 |
+| Pessoas Efetivas   | Eduardo Santos | M          |         390 | Beta    |  78.99 | RJ   | 2018 |
+| Habitos Saudáveis  | Eduardo Santos | M          |         630 | Beta    | 150.98 | RJ   | 2019 |
++--------------------+----------------+------------+-------------+---------+--------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('A Casa Marrom'
+    -> ,'Hermes Macedo','M','250','Bubba', 60, 'MG', 2016);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SELECT * FROM LIVROS;
++--------------------+----------------+------------+-------------+---------+--------+------+------+
+| LIVRO              | AUTOR          | SEXO_AUTOR | NUM_PAGINAS | EDITORA | VALOR  | UF   | ANO  |
++--------------------+----------------+------------+-------------+---------+--------+------+------+
+| Cavaleiro Real     | Ana Claudia    | F          |         465 | Atlas   |  49.90 | RJ   | 2009 |
+| SQL para leigos    | João Nunes     | M          |         450 | Addison |  98.00 | SP   | 2018 |
+| Receitas Caseiras  | Celia Tavares  | F          |         210 | Atlas   |  45.00 | RJ   | 2008 |
+| Pessoas Efetivas   | Eduardo Santos | M          |         390 | Beta    |  78.99 | RJ   | 2018 |
+| Habitos Saudáveis  | Eduardo Santos | M          |         630 | Beta    | 150.98 | RJ   | 2019 |
+| A Casa Marrom      | Hermes Macedo  | M          |         250 | Bubba   |  60.00 | MG   | 2016 |
++--------------------+----------------+------------+-------------+---------+--------+------+------+
+6 rows in set (0.00 sec)
+
+mysql> INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('Estacio Querido'
+    -> ,'Geraldo Francisco','M','310','Insignia', 100, 'ES', 2015);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM LIVROS;
++--------------------+-------------------+------------+-------------+----------+--------+------+------+
+| LIVRO              | AUTOR             | SEXO_AUTOR | NUM_PAGINAS | EDITORA  | VALOR  | UF   | ANO  |
++--------------------+-------------------+------------+-------------+----------+--------+------+------+
+| Cavaleiro Real     | Ana Claudia       | F          |         465 | Atlas    |  49.90 | RJ   | 2009 |
+| SQL para leigos    | João Nunes        | M          |         450 | Addison  |  98.00 | SP   | 2018 |
+| Receitas Caseiras  | Celia Tavares     | F          |         210 | Atlas    |  45.00 | RJ   | 2008 |
+| Pessoas Efetivas   | Eduardo Santos    | M          |         390 | Beta     |  78.99 | RJ   | 2018 |
+| Habitos Saudáveis  | Eduardo Santos    | M          |         630 | Beta     | 150.98 | RJ   | 2019 |
+| A Casa Marrom      | Hermes Macedo     | M          |         250 | Bubba    |  60.00 | MG   | 2016 |
+| Estacio Querido    | Geraldo Francisco | M          |         310 | Insignia | 100.00 | ES   | 2015 |
++--------------------+-------------------+------------+-------------+----------+--------+------+------+
+7 rows in set (0.00 sec)
+
+mysql> INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('Pra sempre amigas'
+    -> ,'Leda Silva','F','510','Insignia', 78.98, 'ES', 2011);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM LIVROS;
++--------------------+-------------------+------------+-------------+----------+--------+------+------+
+| LIVRO              | AUTOR             | SEXO_AUTOR | NUM_PAGINAS | EDITORA  | VALOR  | UF   | ANO  |
++--------------------+-------------------+------------+-------------+----------+--------+------+------+
+| Cavaleiro Real     | Ana Claudia       | F          |         465 | Atlas    |  49.90 | RJ   | 2009 |
+| SQL para leigos    | João Nunes        | M          |         450 | Addison  |  98.00 | SP   | 2018 |
+| Receitas Caseiras  | Celia Tavares     | F          |         210 | Atlas    |  45.00 | RJ   | 2008 |
+| Pessoas Efetivas   | Eduardo Santos    | M          |         390 | Beta     |  78.99 | RJ   | 2018 |
+| Habitos Saudáveis  | Eduardo Santos    | M          |         630 | Beta     | 150.98 | RJ   | 2019 |
+| A Casa Marrom      | Hermes Macedo     | M          |         250 | Bubba    |  60.00 | MG   | 2016 |
+| Estacio Querido    | Geraldo Francisco | M          |         310 | Insignia | 100.00 | ES   | 2015 |
+| Pra sempre amigas  | Leda Silva        | F          |         510 | Insignia |  78.98 | ES   | 2011 |
++--------------------+-------------------+------------+-------------+----------+--------+------+------+
+8 rows in set (0.00 sec)
+
+mysql> INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('Copas Inesqueciveis'
+    -> ,'Marco Alcantara','M','200','Larson', 130.98, 'RS', 2018);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * FROM LIVROS;
++---------------------+-------------------+------------+-------------+----------+--------+------+------+
+| LIVRO               | AUTOR             | SEXO_AUTOR | NUM_PAGINAS | EDITORA  | VALOR  | UF   | ANO  |
++---------------------+-------------------+------------+-------------+----------+--------+------+------+
+| Cavaleiro Real      | Ana Claudia       | F          |         465 | Atlas    |  49.90 | RJ   | 2009 |
+| SQL para leigos     | João Nunes        | M          |         450 | Addison  |  98.00 | SP   | 2018 |
+| Receitas Caseiras   | Celia Tavares     | F          |         210 | Atlas    |  45.00 | RJ   | 2008 |
+| Pessoas Efetivas    | Eduardo Santos    | M          |         390 | Beta     |  78.99 | RJ   | 2018 |
+| Habitos Saudáveis   | Eduardo Santos    | M          |         630 | Beta     | 150.98 | RJ   | 2019 |
+| A Casa Marrom       | Hermes Macedo     | M          |         250 | Bubba    |  60.00 | MG   | 2016 |
+| Estacio Querido     | Geraldo Francisco | M          |         310 | Insignia | 100.00 | ES   | 2015 |
+| Pra sempre amigas   | Leda Silva        | F          |         510 | Insignia |  78.98 | ES   | 2011 |
+| Copas Inesqueciveis | Marco Alcantara   | M          |         200 | Larson   | 130.98 | RS   | 2018 |
++---------------------+-------------------+------------+-------------+----------+--------+------+------+
+9 rows in set (0.00 sec)
+
+mysql> INSERT INTO LIVROS(LIVRO,AUTOR,SEXO_AUTOR,NUM_PAGINAS,EDITORA, VALOR, UF, ANO) VALUES('O poder da mente'
+    -> ,'Clara Mafra','F','120','Continental', 56.58, 'SP', 2017);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SELECT * FROM LIVROS;
++---------------------+-------------------+------------+-------------+-------------+--------+------+------+
+| LIVRO               | AUTOR             | SEXO_AUTOR | NUM_PAGINAS | EDITORA     | VALOR  | UF   | ANO  |
++---------------------+-------------------+------------+-------------+-------------+--------+------+------+
+| Cavaleiro Real      | Ana Claudia       | F          |         465 | Atlas       |  49.90 | RJ   | 2009 |
+| SQL para leigos     | João Nunes        | M          |         450 | Addison     |  98.00 | SP   | 2018 |
+| Receitas Caseiras   | Celia Tavares     | F          |         210 | Atlas       |  45.00 | RJ   | 2008 |
+| Pessoas Efetivas    | Eduardo Santos    | M          |         390 | Beta        |  78.99 | RJ   | 2018 |
+| Habitos Saudáveis   | Eduardo Santos    | M          |         630 | Beta        | 150.98 | RJ   | 2019 |
+| A Casa Marrom       | Hermes Macedo     | M          |         250 | Bubba       |  60.00 | MG   | 2016 |
+| Estacio Querido     | Geraldo Francisco | M          |         310 | Insignia    | 100.00 | ES   | 2015 |
+| Pra sempre amigas   | Leda Silva        | F          |         510 | Insignia    |  78.98 | ES   | 2011 |
+| Copas Inesqueciveis | Marco Alcantara   | M          |         200 | Larson      | 130.98 | RS   | 2018 |
+| O poder da mente    | Clara Mafra       | F          |         120 | Continental |  56.58 | SP   | 2017 |
++---------------------+-------------------+------------+-------------+-------------+--------+------+------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT AUTOR, SEXO_AUTOR
+    -> WHERE UF LIKE '%SP';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE UF LIKE '%SP'' at line 2
+mysql> WHERE UF LIKE '%SP';SELECT AUTOR, SEXO_AUTOR FROM LIVROS
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE UF LIKE '%SP'' at line 1
+    -> WHERE UF LIKE '%SP';
++-------------+------------+
+| AUTOR       | SEXO_AUTOR |
++-------------+------------+
+| João Nunes  | M          |
+| Clara Mafra | F          |
++-------------+------------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> SELECT AUTOR, SEXO_AUTOR, UF FROM LIVROS
+    -> WHERE UF LIKE '%SP';
++-------------+------------+------+
+| AUTOR       | SEXO_AUTOR | UF   |
++-------------+------------+------+
+| João Nunes  | M          | SP   |
+| Clara Mafra | F          | SP   |
++-------------+------------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT AUTOR, SEXO_AUTOR, UF FROM LIVROS
+    -> WHERE UF LIKE '%SP' AND SEXO_AUTOR '%M';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''%M'' at line 2
+mysql>
